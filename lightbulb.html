@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>test</title>
+    <style>
+	body{margin-left:auto;
+margin-right:auto;
+width:30%;
+background-color:#b0e0e6;
+} 
+  .lightbulb{ font-size:20px; width:300px; height:200px; cursor:default; 
+      color:blue; font-weight:bold; text-align:center; 
+			border-style:solid; border-width:5px; border-color:black;
+			}
+  .switch{ font-size:20px; width:85px; height:50px; cursor:default; 
+      color:green; font-weight:bold; float:left; text-align:center; 
+			background:white;
+			}
+  .master_switch{ font-size:20px; width:140px; height:50px; cursor:default; 
+      color:black; font-weight:bold; float:left; text-align:center; 
+			background:grey;
+						}
+  .x{ font-size:20px; width:100px; height:200px; cursor:default; 
+      color:green; font-weight:bold; margin:0 10px; float:left;}
+  .allon{ background:yellow;  color:blue; }
+  .alloff{ background:black;  color:white; }
+  .on{ background:yellow;  color:blue; }
+  .off{ background:black;  color:white; }
+  .up{ background:green;  color:white; }
+  .down{ background:red;  color:white; }
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+	$(document).ready(function(){
+	
+var changeit2 = function(rclass, aclass, ttext) {
+    $(this).removeClass(rclass).addClass(aclass);
+    $(this).find('span').text(ttext);
+}
+var changeit = function(el, rclass, aclass, ttext) {
+    el.removeClass(rclass).addClass(aclass);
+    el.find('span').text(ttext);
+}
+	
+$('.lightbulb').bind('changeState', function(e) {
+    var $light = $(this);
+    if ($light.hasClass('on')) {
+        $light.trigger('turnOff');
+    } else {
+        $light.trigger('turnOn');
+    }
+})
+
+	.bind('turnOn', function(e) {
+    //  $(this).trigger('changeit2', ['off',  'on', ''] );        
+    changeit($(this), 'off', 'on', '');
+    //   $(this).removeClass('off').addClass('on');
+    //   alert('TURNED ON');                      
+})
+
+	.bind('turnOff', function(e) {
+    //   $(this).changeit2('on',  'off', ''  );            
+    //   $(this).trigger('changeit2',['on',  'off', '' );            
+    changeit($(this), 'on', 'off', '');
+    //   $(this).removeClass('on').addClass('off');
+    //   alert('TURNED OFF');                
+});
+
+$('.switch, .clapper').click(function() {
+    $(this).parent().find('.lightbulb').trigger('changeState');
+    if ($(this).hasClass('up')) {
+        changeit($(this), 'up', 'down', 'down');
+        //  $(this).removeClass('up').addClass('down');
+        //  $(this).find('span').text('down');
+        //  alert('TURNED up');
+    } else {
+        changeit($(this), 'down', 'up', 'up');
+        //   $(this).removeClass('down').addClass('up');
+        //   $(this).find('span').text('up');
+        //   alert('TURNED down');                
+    }
+});
+
+$('.master_switch').click(function() {
+    if ($(this).hasClass('alloff')) {
+        //    if ($('.lightbulb').hasClass('on')) {
+        $('.lightbulb').trigger('turnOff');
+        changeit($(this), 'alloff', 'allon', 'click all on');
+        //   $(this).removeClass('up').addClass('down');             
+        //   $(this).find('span').text('click all on');
+    } else {
+        $('.lightbulb').trigger('turnOn');
+        changeit($(this), 'allon', 'alloff', 'click all off');
+        //   $(this).removeClass('down').addClass('up');
+        //   $(this).find('span').text('click all off');
+    }
+});
+
+});
+
+  </script>
+	
+	</head>
+<body >
+
+<div class="room" id="kitchen">
+    <div class="lightbulb">bills4  KITCHEN<br>lightbulb</div>
+    		 <div class="switch">switch 1<br><span></span></div>
+    		 <div class="switch">switch 2<br><span></span></div>
+    		 <div id="master_switchK" class="master_switch">master sw<br><span></span></div>
+</div>
+<br><br><br>
+<div class="room" id="bedroom">
+    <div class="lightbulb">BEDROOM<br>lightbulb</div>
+    		 <div class="switch">switch 1<br><span></span></div>
+    		 <div class="switch">switch 2<br><span></span></div>
+    		 <div id="master_switchB" class="master_switch">master switch<br><span></span></div>
+</div>
+
+</body>
+</html>
+
+
